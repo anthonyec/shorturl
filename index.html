@@ -1,13 +1,41 @@
 <style>
   body {
     font-family: sans-serif;
+    animation: fallback 300ms 2s ease both;
+  }
+
+  @keyframes fallback {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 </style>
 
-<meta http-equiv="Refresh" content="1; url='https://anthonycossins.com'" />
+<meta http-equiv="Refresh" content="4; url='https://anthonycossins.com'" />
 
 Redirecting to <a href="https://anthonycossins.com">anthonycossins.com</a>
 
 <script>
-  window.location.pathname = "/"
+  const PATH = "ossins.com"
+
+  function wait(milliseconds) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, milliseconds)
+    })
+  }
+
+  async function main() {
+    const originalPath = window.location.pathname !== "/" ? window.location.pathname : ""
+    if (originalPath === "/") return
+
+    for (let index = 1; index <= PATH.length; index ++) {
+      const newPath = "/" + PATH.slice(0, index) + originalPath
+      window.history.replaceState({}, "", newPath)
+
+      await wait(40)
+    }
+ 
+    window.location.href = `https://anthonycossins.com${originalPath}`
+  }
+
+  main()
 </script>
